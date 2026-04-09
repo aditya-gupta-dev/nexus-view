@@ -2,8 +2,9 @@ import type { Metadata } from "next";
 import { Geist, Geist_Mono, Inter } from "next/font/google";
 import "./globals.css";
 import { cn } from "@/lib/utils";
+import { ClerkProvider, Show, SignInButton, UserButton } from "@clerk/nextjs";
 
-const inter = Inter({subsets:['latin'],variable:'--font-sans'});
+const inter = Inter({ subsets: ['latin'], variable: '--font-sans' });
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -26,13 +27,21 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html
-      lang="en"
-      className={cn("antialiased", geistSans.variable, geistMono.variable, "font-sans", inter.variable)}
-    >
-      <body>
-        {children}
-      </body>
-    </html>
+    <ClerkProvider>
+      <html
+        lang="en"
+        className={cn("antialiased", geistSans.variable, geistMono.variable, "font-sans", inter.variable)}
+      >
+        <body>
+          {/* <Show when={'signed-in'}>
+            <UserButton/>
+          </Show>
+          <Show when={'signed-out'}>
+            <SignInButton/>
+          </Show> */}
+          {children}
+        </body>
+      </html>
+    </ClerkProvider>
   );
 }
